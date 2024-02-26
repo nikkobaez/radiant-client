@@ -81,7 +81,7 @@ function App() {
     return (
         <div className="flex w-full items-center justify-center">
             {weatherData.main && (
-                <div className="m-4 flex h-fit w-full max-w-[1440px] flex-col items-center justify-center rounded-xl p-4 sm:max-h-[800px] sm:border-4 sm:border-[#efefef] lg:flex-row">
+                <div className="m-4 flex h-fit w-full max-w-[1440px] flex-col items-center justify-center rounded-xl p-4 lg:max-h-[800px] lg:flex-row lg:border-4 lg:border-[#efefef]">
                     <Display 
                         name={weatherData.name}
                         temp={weatherData.main.temp}
