@@ -9,25 +9,6 @@ function App() {
     const [longitude, setLongitude] = useState(-95.45605119999999);
     const [cityAndState, setCityAndState] = useState("");
 
-    useEffect(() => {
-        const fetchWeatherData = () => {
-            const openWeatherApiKey = "c336b2d262214571481631a42bc85e49"
-            const openWeatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${openWeatherApiKey}&units=imperial`;
-    
-            axios.get(openWeatherApiUrl)
-            .then((response) => {
-                console.log(response.data)
-                setWeatherData(response.data)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-        }
-
-        fetchWeatherData()
-
-    }, [latitude, longitude])
-
     const fetchLatitudeAndLongitude = () => {
         // Input Validation - Check if the input is empty
         if (cityAndState.length === 0) {
@@ -55,7 +36,7 @@ function App() {
             return
         }
 
-        const googleMapsApiKey = "AIzaSyA4q-MYZhbhKZ1BoaLwTHp6H5tC4xaUYfA";
+        const googleMapsApiKey = process.env.REACT_APP_GOOGLE_API_KEY;
         const geocodeApiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(`${city}, ${state}`)}&key=${googleMapsApiKey}`;
 
         console.log("hi")
@@ -78,10 +59,29 @@ function App() {
     }
 
 
+    useEffect(() => {
+        const fetchWeatherData = () => {
+            const openWeatherApiKey = process.env.REACT_APP_OPENWEATHER_API_KEY
+            const openWeatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${openWeatherApiKey}&units=imperial`;
+    
+            axios.get(openWeatherApiUrl)
+            .then((response) => {
+                console.log(response.data)
+                setWeatherData(response.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        }
+
+        fetchWeatherData()
+
+    }, [latitude, longitude])
+
     return (
-        <div className="flex">
+        <div className="flex w-full items-center justify-center">
             {weatherData.main && (
-                <>
+                <div className="flex w-full flex-col items-center justify-center lg:flex-row">
                     <Display 
                         name={weatherData.name}
                         temp={weatherData.main.temp}
@@ -90,8 +90,26 @@ function App() {
                         setCityAndState={setCityAndState}
                         fetchLatitudeAndLongitude={fetchLatitudeAndLongitude}
                     />
-                    <Details />
-                </>
+                    <Details 
+                        feelsLikeTitle="Feels Like"
+                        feelsLike={weatherData.main.feels_like + "°F"}
+
+                        tempMaxTitle="Maxiumum Temperature"
+                        tempMax={weatherData.main.temp_max + "°F"}
+
+                        tempMinTitle="Minimum Temperature"
+                        tempMin={weatherData.main.temp_min + "°F"}
+
+                        pressureTitle="Pressure"
+                        pressure={weatherData.main.pressure + "in"}
+
+                        humidityTitle="Humidity"
+                        humidity={weatherData.main.humidity + "%"}
+
+                        windSpeedTitle="Wind Speed"
+                        windSpeed={weatherData.wind.speed + "mph"}
+                    />
+                </div>
             )}
         </div>
     );

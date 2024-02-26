@@ -1,7 +1,10 @@
-import { FaMagnifyingGlass } from "react-icons/fa6";
-import Cloud from "../assets/cloudy.png";
+import { FaMagnifyingGlass, Cloudy } from "../assets"
+import { formatDate, capitalizeEachWord } from "../utils"
 
 const Display = ({name, temp, desc, cityAndState, setCityAndState, fetchLatitudeAndLongitude}) => {
+    const date = new Date()
+    const formattedDate = formatDate(date);
+    
     const handleChange = (event) => {
         setCityAndState(event.target.value)
     }
@@ -12,43 +15,18 @@ const Display = ({name, temp, desc, cityAndState, setCityAndState, fetchLatitude
         }
     }
 
-    const formatDate = (date) => {
-        const options = {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-            hour12: true
-        }
-        return new Date(date).toLocaleString('en-US', options);
-    }
-
-    function capitalizeEachWord(str) {
-        return str.split(' ').map(word => {
-          if (word.length > 0) {
-            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-          }
-          return '';
-        }).join(' ');
-      }
-
-    const date = new Date()
-    const formattedDate = formatDate(date);
-
     return (
-        <div className='w-[33vw] h-screen min-w-[400px] max-w-[500px]'>
+        <div className='h-fit w-[33vw] min-w-[400px] max-w-[500px] sm:h-screen'>
             {/* INPUT */}
-            <div className='w-full flex justify-center items-center'>
-                <div className='bg-[#efefef] w-3/4 my-4 px-4 py-2 rounded-full flex items-center'>
+            <div className='flex w-full items-center justify-center'>
+                <div className='my-4 flex w-3/4 items-center rounded-full bg-[#efefef] px-4 py-2'>
                     <input 
                         type="text"
                         placeholder="City, State"
                         onChange={handleChange}
                         onKeyDown={handleEnter}
                         value={cityAndState}
-                        className="w-full outline-none bg-[#efefef] pr-2"
+                        className="w-full bg-[#efefef] pr-2 outline-none"
                     />
                     <FaMagnifyingGlass 
                         size={25} 
@@ -58,15 +36,16 @@ const Display = ({name, temp, desc, cityAndState, setCityAndState, fetchLatitude
             </div>
 
             {/* WEATHER DISPLAY */}
-            <div className="w-full flex flex-col justify-center items-center p-4">
+            <div className="flex w-full flex-col items-center justify-center p-4">
                 {/* TOP */}
-                <div className="w-full h-fit flex flex-col items-center gap-2 justify-center">
+                <div className="flex h-fit w-full flex-col items-center justify-center gap-2">
                     <img 
-                        src={Cloud}
+                        src={Cloudy}
                         className="w-1/2"
+                        alt="sun covered by clouds"
                     />
                     <p className="text-3xl">
-                        {temp.toFixed(1)}°C
+                        {temp.toFixed(1)}°F
                     </p>
                     <p className="text-lg">
                         {capitalizeEachWord(desc)}
@@ -75,11 +54,11 @@ const Display = ({name, temp, desc, cityAndState, setCityAndState, fetchLatitude
 
                 {/* BORDER */}
                 <div 
-                    className="border border-[#efefef] my-8 w-3/4"
+                    className="my-8 w-3/4 border border-[#efefef]"
                 />
                 
                 {/* BOTTOM */}
-                <div className="w-full h-fit flex flex-col items-center gap-4 justify-center">
+                <div className="flex h-fit w-full flex-col items-center justify-center gap-4">
                     <p>
                         {formattedDate}
                     </p>
