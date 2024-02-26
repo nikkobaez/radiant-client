@@ -16,7 +16,7 @@ const Display = ({name, temp, desc, cityAndState, setCityAndState, fetchLatitude
     }
 
     return (
-        <div className='h-fit w-[33vw] min-w-[400px] max-w-[500px] sm:h-screen'>
+        <div className='flex h-fit w-[33vw] min-w-[400px] max-w-[500px] flex-col items-center justify-center sm:h-screen'>
             {/* INPUT */}
             <div className='flex w-full items-center justify-center'>
                 <div className='my-4 flex w-3/4 items-center rounded-full bg-[#efefef] px-4 py-2'>
