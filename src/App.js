@@ -81,7 +81,7 @@ function App() {
     return (
         <div className="flex w-full items-center justify-center">
             {weatherData.main && (
-                <div className="flex w-full flex-col items-center justify-center lg:flex-row">
+                <div className="m-4 flex w-full flex-col items-center justify-center rounded-xl border-4 border-[#efefef] p-4 lg:flex-row">
                     <Display 
                         name={weatherData.name}
                         temp={weatherData.main.temp}
@@ -93,19 +93,14 @@ function App() {
                     <Details 
                         feelsLikeTitle="Feels Like"
                         feelsLike={weatherData.main.feels_like + "°F"}
-
                         tempMaxTitle="Maxiumum Temperature"
                         tempMax={weatherData.main.temp_max + "°F"}
-
                         tempMinTitle="Minimum Temperature"
                         tempMin={weatherData.main.temp_min + "°F"}
-
                         pressureTitle="Pressure"
                         pressure={weatherData.main.pressure + "in"}
-
                         humidityTitle="Humidity"
                         humidity={weatherData.main.humidity + "%"}
-
                         windSpeedTitle="Wind Speed"
                         windSpeed={weatherData.wind.speed + "mph"}
                     />
